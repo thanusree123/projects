@@ -1,18 +1,29 @@
-const students = [
-    { name: "A", marks: 90 },
-    { name: "B", marks: 40 },
-    { name: "C", marks: 80 }
-];
+const fs=require("fs")
 
-function showStudents() {
-    console.log(students);
+function getStudent(){
+    const data=fs.readFileSync(
+        "students.json",
+        "utf8"
+    );
+    return JSON.parse(data);
+}
+function showStudent(){
+    const students=getStudent();
+    console.log(students)
+}
+function addStudent(name,marks){
+    const student=getStudent()
+    student.push({
+        name,
+        marks
+    });
+    fs.writeFileSync(
+        "students.json",
+        JSON.stringify(student)
+    )
 }
 
-function addStudent(name, marks) {
-    students.push({ name, marks });
-}
-
-module.exports = {
-    showStudents,
+module.exports={
+    showStudent,
     addStudent
-};
+}
